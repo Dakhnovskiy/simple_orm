@@ -14,3 +14,5 @@ class User(BaseTable):
 
 print(User.get_create_table_script())
 print(User.get_drop_table_script())
+print(User.get_select_script())
+print(User.get_select_script(User.id, User.name))
