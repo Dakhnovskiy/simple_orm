@@ -9,5 +9,8 @@ class User(BaseTable):
     __table_name__ = 'users'
 
     id = IntegerField(primary_key=True)
+    name = TextField(not_null=True)
+    active = BooleanField(not_null=True, default_value=1)
 
-User.get_fields()
+print(User.get_create_table_script())
+print(User.get_drop_table_script())
