@@ -6,15 +6,7 @@ class BaseField:
 
     _type_name = None
 
-    not_null = False
-
-    primary_key = False
-
-    foreign_key = None
-
-    default_value = None
-
-    def __init__(self, not_null, primary_key, foreign_key, default_value):
+    def __init__(self, not_null=False, primary_key=False, foreign_key=None, default_value=None):
         """
 
         :param not_null: является ли поле not null
@@ -23,8 +15,8 @@ class BaseField:
         :param default_value: значение по умолчанию
         """
 
-        self.not_null = not_null
         self.primary_key = primary_key
+        self.not_null = self.primary_key or not_null
         self.foreign_key = foreign_key
         self.default_value = default_value
 

@@ -2,12 +2,12 @@
 __author__ = 'Dmitriy.Dakhnovskiy'
 
 
-from base_field import BaseField
+from .base_field import BaseField
 
 
-class IntegerField(BaseField):
+class TextField(BaseField):
 
-    _type_name = 'BOOLEAN'
+    _type_name = 'TEXT'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
