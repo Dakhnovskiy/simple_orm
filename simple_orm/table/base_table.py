@@ -8,43 +8,6 @@ class BaseTable:
 
     __table_name__ = None
 
-    __create_table_template = 'CREATE TABLE {table_name} (\n{columns_defenition}\n)'
-    __drop_table_template = 'DROP TABLE {table_name}'
-    __select_template = 'SELECT {columns_names} FROM {table_name}'
-    __insert_template = 'INSERT INTO {table_name}({columns_names})\nVALUES ({VALUES})'
-    __update_template = 'UPDATE {table_name} SET\n{columns_values}'
-    __delete_template = 'DELETE FROM {table_name}'
-
-    @classmethod
-    def get_create_table_script(cls):
-        columns_defenition = ',\n'.join((field[0] + ' ' + field[1].defenition for field in cls.get_fields()))
-
-        return cls.__create_table_template.format(
-            table_name=cls.__table_name__,
-            columns_defenition=columns_defenition
-        )
-    
-    @classmethod
-    def get_drop_table_script(cls):
-        return cls.__drop_table_template.format(table_name=cls.__table_name__)
-
-    @classmethod
-    def get_select_script(cls, *fields):
-        columns_names = [field[0] for field in cls.filter_fields(*fields)]
-        return cls.__select_template.format(columns_names=', '.join(columns_names), table_name=cls.__table_name__)
-
-    @classmethod
-    def get_delete_script(cls):
-        pass
-
-    @classmethod
-    def get_insert_script(cls):
-        pass
-
-    @classmethod
-    def get_update_script(cls):
-        pass
-
     @classmethod
     def get_fields(cls):
         """
