@@ -25,6 +25,14 @@ class BaseField:
     def defenition(self):
         return self.__template_defenition.format(**self.__defenition_dict)
 
+    @property
+    def table_name(self):
+        return self.table_class.__table_name__
+
+    @property
+    def name(self):
+        return self.table_class.get_field_name(self)
+
     def __init__(self, not_null=False, primary_key=False, foreign_key=None, default_value=None):
         """
 
@@ -38,3 +46,7 @@ class BaseField:
         self.not_null = self.primary_key or not_null
         self.foreign_key = foreign_key
         self.default_value = default_value
+        self.table_class = None
+
+    def set_table_class(self, cls):
+        self.table_class = cls
