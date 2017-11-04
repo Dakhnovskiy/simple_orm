@@ -34,3 +34,5 @@ print(session.select(User, Relation.name).filter(
         Relation.name == 'друг'
     )
 )
+
+print(session.delete(User).filter(User.name == 'Вася'))

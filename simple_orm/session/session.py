@@ -33,8 +33,8 @@ class Session:
     def __get_select_script(self, columns_names, table_name):
         return self.__select_template.format(columns_names=', '.join(columns_names), table_name=table_name)
 
-    def get_delete_script(self):
-        pass
+    def __get_delete_script(self, table_name):
+        return self.__delete_template.format(table_name=table_name)
 
     def get_insert_script(self):
         pass
@@ -80,3 +80,6 @@ class Session:
         columns_names = [col.full_name for col in columns]
 
         return Query(self.__get_select_script(columns_names, table_name))
+
+    def delete(self, table):
+        return Query(self.__get_delete_script(table_name=table.__table_name__))
