@@ -8,6 +8,8 @@ class BaseField:
 
     __template_defenition = '{TYPE} {NOT_NULL} {PRIMARY_KEY} {DEFAULT_VALUE}'
 
+    __template_cmp = '{field_name} {operator} {other}'
+
     @property
     def type_name(self):
         return self._type_name
@@ -33,6 +35,10 @@ class BaseField:
     def name(self):
         return self.table_class.get_field_name(self)
 
+    @property
+    def full_name(self):
+        return self.table_name + '.' + self.name
+
     def __init__(self, not_null=False, primary_key=False, foreign_key=None, default_value=None):
         """
 
@@ -47,6 +53,30 @@ class BaseField:
         self.foreign_key = foreign_key
         self.default_value = default_value
         self.table_class = None
+
+    def __repr__(self):
+        return self.full_name
+
+    def __fill_template_cmp(self, field_name, operator, other):
+        return self.__template_cmp.format(field_name=field_name, operator=operator, other=repr(other))
+
+    def __eq__(self, other):
+        return self.__fill_template_cmp(self, '=', other)
+
+    def __ne__(self, other):
+        return self.__fill_template_cmp(self, '!=', other)
+
+    def __lt__(self, other):
+        return self.__fill_template_cmp(self, '<', other)
+
+    def __gt__(self, other):
+        return self.__fill_template_cmp(self, '>', other)
+
+    def __le__(self, other):
+        return self.__fill_template_cmp(self, '<=', other)
+
+    def __ge__(self, other):
+        return self.__fill_template_cmp(self, '>=', other)
 
     def set_table_class(self, cls):
         self.table_class = cls

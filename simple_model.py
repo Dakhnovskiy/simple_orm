@@ -23,7 +23,14 @@ class Relation(BaseTable):
 
 session = Session(None)
 
-print(session.get_create_table_script(User))
-print(session.get_drop_table_script(User))
+print(session.create(User, Relation))
+print(session.drop(User))
 
-print(session.select(User, Relation.name))
+print(session.select(User, Relation.name).filter(
+        User.name == Relation.name,
+        User.name <= 'asd',
+        logical_opertor_inner='OR'
+    ).filter(
+        Relation.name == 'друг'
+    )
+)
