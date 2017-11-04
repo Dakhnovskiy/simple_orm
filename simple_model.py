@@ -36,3 +36,6 @@ print(session.select(User, Relation.name).filter(
 )
 
 print(session.delete(User).filter(User.name == 'Вася'))
+
+user = User(id=1, name='Вася')
+print(session.insert(user))

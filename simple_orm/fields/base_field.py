@@ -51,7 +51,7 @@ class BaseField:
         self.primary_key = primary_key
         self.not_null = self.primary_key or not_null
         self.foreign_key = foreign_key
-        self.default_value = default_value
+        self.default_value = self.__class__.value(default_value)
         self.table_class = None
 
     def __repr__(self):
@@ -80,3 +80,11 @@ class BaseField:
 
     def set_table_class(self, cls):
         self.table_class = cls
+
+    @classmethod
+    def value(cls, val):
+        return val
+
+    @classmethod
+    def quoted_value(cls, val):
+        return 'NULL' if val is None else cls.value(val)

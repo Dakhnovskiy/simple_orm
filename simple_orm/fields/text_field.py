@@ -11,3 +11,7 @@ class TextField(BaseField):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    @classmethod
+    def quoted_value(cls, val):
+        return 'NULL' if val is None else repr(cls.value(val))
