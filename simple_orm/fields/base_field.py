@@ -81,8 +81,8 @@ class BaseField:
     def set_table_class(self, cls):
         self.table_class = cls
 
-    @classmethod
-    def value(cls, val):
+    @staticmethod
+    def value(val):
         return val
 
     @classmethod
