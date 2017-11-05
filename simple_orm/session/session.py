@@ -43,8 +43,11 @@ class Session:
             values=', '.join(map(str, column_value_map.values()))
         )
 
-    def get_update_script(self):
-        pass
+    def __get_update_script(self, table_name, columns_values):
+        return self.__update_template.format(
+            table_name=table_name,
+            columns_values=',\n'.join(['%s = %s' % (column, value) for column, value in columns_values.items()])
+        )
 
     def create(self, *tables):
         """
@@ -102,4 +105,22 @@ class Session:
         return Query(self.__get_insert_script(
             table_name=table_record.__class__.__table_name__,
             column_value_map=table_record.column_value_map
+        ))
+
+    def update(self, table, **kwargs):
+        """
+        Создать Query со скриптом update
+        :param: table: класс-таблица
+        :param: kwargs: поля таблицы для обновления
+        :return: инстанс Query
+        """
+
+        columns_values = {
+            field_name: table.get_field_by_name(field_name).__class__.quoted_value(value)
+            for field_name, value in kwargs.items()
+        }
+
+        return Query(self.__get_update_script(
+            table_name=table.__table_name__,
+            columns_values=columns_values
         ))

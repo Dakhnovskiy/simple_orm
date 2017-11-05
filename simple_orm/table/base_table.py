@@ -51,3 +51,7 @@ class BaseTable(metaclass=SetTableClassMeta):
                 break
 
         return field_name
+
+    @classmethod
+    def get_field_by_name(cls, field_name):
+        return getattr(cls, field_name)
