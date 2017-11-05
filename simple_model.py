@@ -23,10 +23,10 @@ class Relation(BaseTable):
 
 session = Session(None)
 
-print(session.create(User, Relation))
-print(session.drop(User))
+print(session.query(User, Relation).create())
+print(session.query(User).drop())
 
-print(session.select(User, Relation.name).filter(
+print(session.query(User, Relation.name).select().filter(
         User.name == Relation.name,
         User.name <= 'asd',
         logical_opertor_inner='OR'
@@ -35,7 +35,8 @@ print(session.select(User, Relation.name).filter(
     )
 )
 
-print(session.delete(User).filter(User.name == 'Вася'))
+print(session.query(User).delete().filter(User.name == 'Вася'))
 
 user = User(id=1, name='Вася')
-print(session.insert(user))
+print(session.query().insert(user))
+print(session.query(User).update(name='Петя').filter(User.id == 1))
