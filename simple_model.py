@@ -6,32 +6,33 @@ from simple_orm.fields import IntegerField, BooleanField, TextField
 from simple_orm.session import Session
 
 
+class City(BaseTable):
+    __table_name__ = 'city'
+
+    id = IntegerField(primary_key=True)
+    name = TextField(not_null=True)
+
+
 class User(BaseTable):
     __table_name__ = 'users'
 
     id = IntegerField(primary_key=True)
     name = TextField(not_null=True)
+    id_city = IntegerField(foreign_key=City.id)
     active = BooleanField(not_null=True, default_value=1)
-
-
-class Relation(BaseTable):
-    __table_name__ = 'relations'
-
-    id = IntegerField(primary_key=True)
-    name = TextField(not_null=True)
 
 
 session = Session(None)
 
-print(session.query(User, Relation).create())
+print(session.query(City, User).create())
 print(session.query(User).drop())
 
-print(session.query(User, Relation.name).select().filter(
-        User.name == Relation.name,
+print(session.query(User, City.name).select().filter(
+        User.name == City.name,
         User.name <= 'asd',
         logical_opertor_inner='OR'
     ).filter(
-        Relation.name == 'друг'
+        City.name == 'друг'
     )
 )
 

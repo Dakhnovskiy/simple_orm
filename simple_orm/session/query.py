@@ -7,7 +7,7 @@ from ..table import BaseTable
 
 class Query:
 
-    __create_table_template = 'CREATE TABLE {table_name} (\n{columns_defenition}\n);'
+    __create_table_template = 'CREATE TABLE {table_name} (\n{columns_defenition}\n{foreign_keys_defenition}\n);'
     __drop_table_template = 'DROP TABLE {table_name};'
     __select_template = 'SELECT {columns_names} FROM {table_name}'
     __insert_template = 'INSERT INTO {table_name}({columns_names})\nVALUES ({values})'
@@ -52,11 +52,16 @@ class Query:
         return self.query_str
 
     def __get_create_table_script(self, cls):
-        columns_defenition = ',\n'.join((field[0] + ' ' + field[1].defenition for field in cls.get_fields()))
+        fields = cls.get_fields()
+        columns_defenition = ',\n'.join((field[0] + ' ' + field[1].defenition for field in fields))
+        foreign_keys_defenition = '\n'.join(
+            ', ' + field[1].foreign_key_defenition for field in fields if field[1].foreign_key_defenition
+        )
 
         return self.__create_table_template.format(
             table_name=cls.__table_name__,
-            columns_defenition=columns_defenition
+            columns_defenition=columns_defenition,
+            foreign_keys_defenition=foreign_keys_defenition
         )
 
     def __get_drop_table_script(self, cls):

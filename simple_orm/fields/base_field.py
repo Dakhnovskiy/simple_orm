@@ -10,6 +10,8 @@ class BaseField:
 
     __template_cmp = '{field_name} {operator} {other}'
 
+    __template_foreign_key_defenition = 'FOREIGN KEY ({self_name}) REFERENCES {table_name}({field_name})'
+
     @property
     def type_name(self):
         return self._type_name
@@ -26,6 +28,16 @@ class BaseField:
     @property
     def defenition(self):
         return self.__template_defenition.format(**self.__defenition_dict)
+
+    @property
+    def foreign_key_defenition(self):
+        if self.foreign_key is None:
+            return None
+        return self.__template_foreign_key_defenition.format(
+            self_name=self.name,
+            table_name=self.foreign_key.table_name,
+            field_name=self.foreign_key.name
+        )
 
     @property
     def table_name(self):
@@ -47,6 +59,8 @@ class BaseField:
         :param foreign_key: ссылка на внешний ключ
         :param default_value: значение по умолчанию
         """
+
+        # TODO: asserts
 
         self.primary_key = primary_key
         self.not_null = self.primary_key or not_null
