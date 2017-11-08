@@ -23,9 +23,10 @@ class Query:
             query += '\nWHERE ' + self.__filter_str
         return query
 
-    def __init__(self, *args, query_str=None):
+    def __init__(self, *args, query_str=None, connect=None):
         super().__init__()
 
+        self.__connect = connect
         if query_str is None:
             query_str = ''
         self.__query_str = query_str
@@ -200,3 +201,12 @@ class Query:
 
         self.__join_str += join_str
         return self
+
+    def execute(self):
+        """
+        Выполняет запрос собранный в инстансе Query
+        :return: курсор
+        """
+        cur = self.__connect.cursor()
+        cur.execute(self.query_str)
+        return cur
