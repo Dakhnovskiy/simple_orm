@@ -41,3 +41,6 @@ print(session.query(User).delete().filter(User.name == 'Вася'))
 user = User(id=1, name='Вася')
 print(session.query().insert(user))
 print(session.query(User).update(name='Петя').filter(User.id == 1))
+
+
+print(session.query(User, City.name).select().join(City))

@@ -17,6 +17,8 @@ class Query:
     @property
     def query_str(self):
         query = self.__query_str
+        if self.__join_str:
+            query += self.__join_str
         if self.__filter_str:
             query += '\nWHERE ' + self.__filter_str
         return query
@@ -28,6 +30,7 @@ class Query:
             query_str = ''
         self.__query_str = query_str
         self.__filter_str = ''
+        self.__join_str = ''
 
         self.__tables = set()
         self.__fields = []
@@ -166,7 +169,7 @@ class Query:
         :param: condition_expressions: условие ограничения (Table.column == 10, Table.column == Table2.column2)
         :param: logical_opertor_inner: логический оператор для внутреннего соединения переданных условий
         :param: logical_opertor_outer: логический оператор для внешнего соединения переданных условий
-        :return: экземляр Query
+        :return: инстанс Query
         """
         if logical_opertor_inner is None:
             logical_opertor_inner = 'AND'
@@ -179,4 +182,21 @@ class Query:
         filter_condition = '(%s)' % ((' %s ' % logical_opertor_inner).join(condition_expressions))
         self.__filter_str += (' %s ' % logical_opertor_outer if self.__filter_str else '') + filter_condition
 
+        return self
+
+    def join(self, table, auto_join=True):
+        """
+        Добавляет join таблицы к запросу
+        :param: table: класс-таблица
+        :param: auto_join: флаг(генерировать условие присеодинения для таблиц с FK, если True)
+        :return: инстанс Query
+        """
+        join_str = '\nJOIN %s' % table.__table_name__
+        if auto_join:
+            field_foreign_key = self.__main_table.get_foreign_field_by_table(table) or \
+                                table.get_foreign_field_by_table(self.__main_table)
+            if field_foreign_key:
+                join_str += ' ON %s = %s' % (field_foreign_key.full_name, field_foreign_key.foreign_key.full_name)
+
+        self.__join_str += join_str
         return self

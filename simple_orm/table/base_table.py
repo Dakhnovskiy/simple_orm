@@ -55,3 +55,14 @@ class BaseTable(metaclass=SetTableClassMeta):
     @classmethod
     def get_field_by_name(cls, field_name):
         return getattr(cls, field_name)
+
+    @classmethod
+    def get_foreign_field_by_table(cls, table):
+        field_foreign_key = None
+        for _, field in cls.get_fields():
+            if field.foreign_key:
+                if field.foreign_key.table_class is table:
+                    field_foreign_key = field
+                    break
+
+        return field_foreign_key
