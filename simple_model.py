@@ -60,4 +60,4 @@ with Session('example.db') as session:
     print(session.query(City, User).select().join(User))
 
 
-    # TODO: multioperation, order selected columns
+    # TODO: multioperation

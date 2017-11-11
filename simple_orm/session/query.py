@@ -40,17 +40,14 @@ class Query:
         for arg in args:
             if isinstance(arg, BaseField):
                 self.__fields.append(arg)
-                self.__set_main_table(arg.table_class)
             elif issubclass(arg, BaseTable):
                 self.__tables.add(arg)
-                self.__set_main_table(arg)
+                self.__fields.extend([field[1] for field in arg.get_fields()])
             else:
                 # TODO raise
                 pass
-
-    def __set_main_table(self, table):
-        if self.__main_table is None:
-            self.__main_table = table
+        if self.__fields:
+            self.__main_table = self.__fields[0].table_class
 
     def __str__(self):
         return self.query_str
@@ -115,13 +112,7 @@ class Query:
         :return: инстанс Query
         """
 
-        # получить список колонок из self.__tables и self.__fields
-        columns = self.__fields[:]
-
-        for table in self.__tables:
-            columns.extend([field[1] for field in table.get_fields()])
-
-        columns_names = [col.full_name for col in columns]
+        columns_names = [col.full_name for col in self.__fields]
 
         self.__set_query_str(self.__get_select_script(self.__main_table.__table_name__, columns_names))
         return self
