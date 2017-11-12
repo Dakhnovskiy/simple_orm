@@ -1,4 +1,4 @@
-# Простой ORM для СУБД SqlLite
+# Простой ORM для СУБД SqLite
 
 ## Построение модели данных (BaseTable, BaseFields)
 [model](./simple_orm/docs/model.md)
