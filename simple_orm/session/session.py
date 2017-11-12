@@ -32,7 +32,7 @@ class Session:
     def query(self, *args):
         """
         Получить инстанс класса запроса
-        :param: args: инстансы класса-поля, класс-таблицы
+        :param args: инстансы класса-поля, класс-таблицы
         :return: инстанс класса запроса
         """
         return Query(*args, connect=self.__connect)

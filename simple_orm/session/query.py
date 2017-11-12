@@ -164,7 +164,7 @@ class Query:
     def insert(self, *table_records):
         """
         Создать Query со скриптом insert
-        :param: table_record: инстанс таблицы
+        :param table_record: инстанс таблицы
         :return: инстанс Query
         """
         for table_record in table_records:
@@ -177,7 +177,7 @@ class Query:
     def update(self, **kwargs):
         """
         Создать Query со скриптом update
-        :param: kwargs: поля таблицы для обновления
+        :param kwargs: поля таблицы для обновления
         :return: инстанс Query
         """
 
@@ -195,9 +195,9 @@ class Query:
     def filter(self, *condition_expressions, logical_opertor_inner=None, logical_opertor_outer=None):
         """
         Добавляет условие ограничения
-        :param: condition_expressions: условие ограничения (Table.column == 10, Table.column == Table2.column2)
-        :param: logical_opertor_inner: логический оператор для внутреннего соединения переданных условий
-        :param: logical_opertor_outer: логический оператор для внешнего соединения переданных условий
+        :param condition_expressions: условие ограничения (Table.column == 10, Table.column == Table2.column2)
+        :param logical_opertor_inner: логический оператор для внутреннего соединения переданных условий
+        :param logical_opertor_outer: логический оператор для внешнего соединения переданных условий
         :return: инстанс Query
         """
         if logical_opertor_inner is None:
@@ -216,8 +216,8 @@ class Query:
     def join(self, table, auto_join=True):
         """
         Добавляет join таблицы к запросу
-        :param: table: класс-таблица
-        :param: auto_join: флаг(генерировать условие присеодинения для таблиц с FK, если True)
+        :param table: класс-таблица
+        :param auto_join: флаг(генерировать условие присеодинения для таблиц с FK, если True)
         :return: инстанс Query
         """
         join_str = '\nJOIN %s' % table.__table_name__

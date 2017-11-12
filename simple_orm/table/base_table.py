@@ -41,7 +41,7 @@ class BaseTable(metaclass=SetTableClassMeta):
     @classmethod
     def get_field_name(cls, field_instance):
         """
-        :param: field_instance: инстанс поля таблицы
+        :param field_instance: инстанс поля таблицы
         :return: название поля
         """
         field_name = None
