@@ -164,7 +164,7 @@ class Query:
     def insert(self, *table_records):
         """
         Создать Query со скриптом insert
-        :param table_record: инстанс таблицы
+        :param table_records: инстансы классов-таблиц
         :return: инстанс Query
         """
         for table_record in table_records:
@@ -232,7 +232,7 @@ class Query:
 
     def execute(self):
         """
-        Выполняет запрос собранный в инстансе Query
+        Выполняет запросы, собранные в инстансе Query
         :return: курсор
         """
         cur = self.__connect.cursor()

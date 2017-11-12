@@ -29,10 +29,11 @@ class Session:
         """
         self.__connect.commit()
 
-    def query(self, *args):
+    def query(self, *args, query_str=None):
         """
         Получить инстанс класса запроса
         :param args: инстансы класса-поля, класс-таблицы
+        :param query_str: raw sql
         :return: инстанс класса запроса
         """
-        return Query(*args, connect=self.__connect)
+        return Query(*args, query_str=query_str, connect=self.__connect)
