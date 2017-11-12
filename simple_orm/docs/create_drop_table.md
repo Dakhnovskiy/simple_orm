@@ -1,4 +1,4 @@
-## Пример создания/удаление таблиц 
+## Пример создания/удаления таблиц 
  
     from simple_orm.table import BaseTable
     from simple_orm.fields import IntegerField, BooleanField, TextField
