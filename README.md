@@ -1,2 +1,2 @@
 # simple_orm
-simple ORM
+Простой ORM для SqlLite
