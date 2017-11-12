@@ -18,10 +18,21 @@ class Session:
         self.close()
 
     def close(self):
+        """
+        Закрыть коннект
+        """
         self.__connect.close()
 
     def commit(self):
+        """
+        Коммит
+        """
         self.__connect.commit()
 
     def query(self, *args):
+        """
+        Получить инстанс класса запроса
+        :param: args: инстансы класса-поля, класс-таблицы
+        :return: инстанс класса запроса
+        """
         return Query(*args, connect=self.__connect)

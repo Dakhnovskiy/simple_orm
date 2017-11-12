@@ -23,27 +23,19 @@ class User(BaseTable):
 
 with Session('example.db') as session:
 
-    # session.query(User).drop().execute()
-    # session.query(City).drop().execute()
-    # session.commit()
-    # session.query(City).create().execute()
-    # session.query(User).create().execute()
-    # session.commit()
+    session.query(City, User).create().execute()
+    session.commit()
 
     session.query(User).delete().execute()
     session.query(City).delete().execute()
     session.commit()
 
     city = City(id=1, name='Краснодар')
-    session.query().insert(city).execute()
     city2 = City(id=2, name='Москва')
-    session.query().insert(city2).execute()
-
     user = User(id=1, name='Вася', id_city=city.id)
-    session.query().insert(user).execute()
-    user = User(id=2, name='Петя', id_city=city2.id)
-    session.query().insert(user).execute()
+    user2 = User(id=2, name='Петя', id_city=city2.id)
 
+    session.query().insert(city, city2, user, user2).execute()
     session.commit()
 
     session.query(User).update(name='СуперПетя').filter(User.name == 'Петя').execute()
@@ -53,11 +45,12 @@ with Session('example.db') as session:
     for row in session.query(User).select().filter(User.name == 'Вася', User.name == 'СуперПетя',
                                                    logical_opertor_inner='OR').filter(User.id < 3).execute():
         print(row)
+
     print('\n=======select+autojoin=======')
     for row in session.query(User, City.name).select().join(City).execute():
         print(row)
 
     print(session.query(City, User).select().join(User))
 
-
-    # TODO: multioperation
+    session.query(User, City).drop().execute()
+    session.commit()
