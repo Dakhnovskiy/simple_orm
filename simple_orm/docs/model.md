@@ -2,7 +2,7 @@
 
 Для описания модели необходимо объявить класс унасследованный от класса BaseTable.
 
-Название таблицы задаётся атрибутом класса table_name.
+Название таблицы задаётся атрибутом класса __table_name__.
 
 Поля таблицы задаются с помощью классов-полей: IntegerField, BooleanField, TextField
 
@@ -12,7 +12,7 @@
 * foreign_key: ссылка на внешний ключ (инстанс класс-поля)
 * default_value: значение по умолчанию
 
-Пример:
+##Пример:
 
     from simple_orm.table import BaseTable
     from simple_orm.fields import IntegerField, BooleanField, TextField
