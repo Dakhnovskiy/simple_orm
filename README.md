@@ -7,7 +7,7 @@
 [Session](./simple_orm/docs/session.md)
 
 ## Класс Query
-[Session](./simple_orm/docs/query.md)
+[Query](./simple_orm/docs/query.md)
 
 ## Создание/удаление таблиц
 [create/drop table](./simple_orm/docs/create_drop_table.md)
@@ -18,7 +18,7 @@
 ## Обновление даных
 [update](./simple_orm/docs/update.md)
 
-## Вставка даных
+## Удаление даных
 [delete](./simple_orm/docs/delete.md)
 
 ## Выборка данных
